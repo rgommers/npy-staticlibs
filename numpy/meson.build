@@ -56,7 +56,5 @@ tempita = generator(tempita_cli,
   output : '@BASENAME@'
 )
 
-np_dir = py.get_install_dir() / 'numpy'
-
 subdir('core')
 subdir('random')

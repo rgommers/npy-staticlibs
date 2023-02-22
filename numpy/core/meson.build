@@ -427,15 +427,12 @@ config_h = configure_file(
   input: 'config.h.in',
   output: 'config.h',
   configuration: cdata,
-  install: false
 )
 
 _numpyconfig_h = configure_file(
   input: 'include/numpy/_numpyconfig.h.in',
   output: '_numpyconfig.h',
   configuration: cdata,
-  install: true,
-  install_dir: np_dir / 'core/include/numpy'
 )
 
 # Build npymath static library
@@ -475,8 +472,10 @@ npymath_lib = static_library('npymath',
   c_args: staticlib_cflags,
   include_directories: ['include', 'src/npymath', 'src/common'],
   dependencies: py_dep,
-  install: true,
-  install_dir: np_dir / 'core/lib',
+)
+libnpymath_dep = declare_dependency(
+  link_with: npymath_lib,
+  include_directories: 'include',  # FIXME - need to ensure this doesn't clash with installed numpy
 )
 
 # Generate NumPy C API sources
@@ -502,16 +501,12 @@ src_numpy_api = custom_target('__multiarray_api',
   output : ['__multiarray_api.c', '__multiarray_api.h'],
   input : 'code_generators/generate_numpy_api.py',
   command: [py, '@INPUT@', '-o', '@OUTDIR@', '--ignore', src_umath_api_c],
-  install: true,  # NOTE: setup.py build installs all, but just need .h?
-  install_dir: np_dir / 'core/include/numpy'
 )
 
 src_ufunc_api = custom_target('__ufunc_api',
   output : ['__ufunc_api.c', '__ufunc_api.h'],
   input : 'code_generators/generate_ufunc_api.py',
   command: [py, '@INPUT@', '-o', '@OUTDIR@'],
-  install: true,  # NOTE: setup.py build installs all, but just need .h?
-  install_dir: np_dir / 'core/include/numpy'
 )
 
 

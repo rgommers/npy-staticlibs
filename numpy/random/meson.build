@@ -11,8 +11,10 @@ npyrandom_sources = [
 npyrandom_lib = static_library('npyrandom',
   npyrandom_sources,
   c_args: staticlib_cflags,
-  # include_directories: '../core/include',
   dependencies: [py_dep, np_core_dep],
-  install: true,
-  install_dir: np_dir / 'random/lib',
+)
+
+libnpyrandom_dep = declare_dependency(
+  link_with: [npyrandom_lib, npymath_lib],
+  include_directories: '../core/include/numpy/random',
 )
