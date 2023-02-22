@@ -1,9 +1,3 @@
-option('blas', type: 'string', value: 'openblas',
-        description: 'option for BLAS library switching')
-option('lapack', type: 'string', value: 'openblas',
-        description: 'option for LAPACK library switching')
-option('disable-svml', type: 'boolean', value: 'false',
-        description: 'Disable building against SVML')
 option('disable-threading', type: 'boolean', value: 'false',
         description: 'Disable threading support (see `NPY_ALLOW_THREADS` docs)')
 # TODO: flip value to 'false' once we have `npy_cpu_dispatch_config.h` & co.
